@@ -13,15 +13,9 @@ sys.path.append(logic_path)
 from factorycall import callhandlers
 
 
-#http://localhost:8000/?greeting='wuchen'
-class IndexHandler(tornado.web.RequestHandler):
-    def get(self):
-        greeting = self.get_argument('greeting', 'Hello')
-        self.write(greeting + ', friendly user!')
-
 if __name__ == "__main__":
     tornado.options.parse_command_line()
     app = tornado.web.Application(handlers=callhandlers,**settings)
     http_server = tornado.httpserver.HTTPServer(app)
-    http_server.listen(dhport)
+    http_server.listen(dhport)# listen local only "127.0.0.1"
     tornado.ioloop.IOLoop.instance().start()

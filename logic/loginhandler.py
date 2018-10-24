@@ -5,5 +5,11 @@ import tornado.web
 #http://localhost:8000/?greeting='wuchen'
 class LoginHandler(tornado.web.RequestHandler):
     def post(self):
-        greeting = self.get_argument('greeting', 'Hello')
-        self.write(greeting + ', friendly user!')
+        try:
+            name = self.get_argument('name', 'noname')
+            password = self.get_argument('password','nopassword')
+            self.write(name + ' login success!'+' pass word is: '+ password)
+            print(name + ' login success!'+' pass word is: '+ password)
+        except :
+            print('get_argument exception...')
+    get = post
