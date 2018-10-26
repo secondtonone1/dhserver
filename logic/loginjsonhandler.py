@@ -5,16 +5,21 @@ import tornado.web
 import json
 #http://localhost:8000/?greeting='wuchen'
 
-class LoginHandler(tornado.web.RequestHandler):
+class LoginJsonHandler(tornado.web.RequestHandler):
     def post(self):
         try:
+            data=json.loads(self.request.body)
             print("call LoginHandler success!!!")
-            name = self.get_argument('name', 'noname')
-            password = self.get_argument('password','nopassword')
+            if('name' not in data):
+                name='noname'
+            else:
+                name = data['name']
+            if('password' not in data):
+                password = 'nopassword'
+            else:
+                password = data['password']
             self.write(name + ' login success!'+' pass word is: '+ password)
             print(name + ' login success!'+' pass word is: '+ password)
         except :
             print('get_argument exception...')
     get = post
-
-
