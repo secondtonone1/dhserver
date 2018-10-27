@@ -20,9 +20,9 @@ class MongoDbSingle(Singleton):
     def insertData(self,setname='',*,data={}):
         try:
             mycol = self.db[setname]
-            mydoc = mycol.find(data)
-            #if (mydoc.count()!=0):
-               # return True
+            mydoc = mycol.find_one(data)
+            if (mydoc != None):
+                return True
             mycol.insert_one(data)
             return True;
         except:
@@ -32,10 +32,10 @@ class MongoDbSingle(Singleton):
     def getData(self,setname='',*,query={}):
         try:
             mycol = self.db[setname]
-            mydoc = mycol.find(query).limit(1)
-            if(mydoc is None):
+            mydoc = mycol.find_one(query)
+            if(mydoc == None):
                 return None
-            return mydoc[0]
+            return mydoc
         except:
             print("get data failed")
             return None
@@ -60,7 +60,7 @@ class MongoDbSingle(Singleton):
 
 _mongoInstance = MongoDbSingle()
 _mongoInstance.initDb('127.0.0.1',29017,'dhhome')
-datas = { "name": "test3333444", "password": "123456" }
+datas = { "name": "test", "password": "123456" }
 _mongoInstance.insertData('userbase',data=datas)
 print(_mongoInstance.getData('userbase',query={"name":"test"}))
 _mongoInstance.updateData('userbase',query={"name":"test"},newvalues={"name":"teacher cai"})
