@@ -27,11 +27,16 @@ def postjsonrequest(urls='',datas={}):
     header = {'Content-Type': 'application/json'}    ## headers中添加上content-type这个参数，指定为json格式
     response = requests.post(urls, headers=header, data=json.dumps(datas),timeout=5)    ## post的时候，将data字典形式的参数用json包转换成json格式。
     return response
-    
+
+def postfilerequest(urls='',datas={},filepath=''):
+    file = {"files" : open(filepath, "rb") }
+    response = requests.post(urls, files=file , data=datas,timeout=5)    ## post的时候，将data字典形式的参数用json包转换成json格式。
+    return response
 if __name__ == "__main__":
     try:
         getrequest(urlcode)
         postrequest(posturls,payload)
         postjsonrequest('http://127.0.0.1:8898/login_json',payload)
+        postfilerequest('http://127.0.0.1:8898/upload_file',payload,'test.jpg')
     except requests.exceptions.ReadTimeout:
         print('request time out...')

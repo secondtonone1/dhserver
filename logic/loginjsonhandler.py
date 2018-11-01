@@ -8,7 +8,7 @@ import json
 class LoginJsonHandler(tornado.web.RequestHandler):
     def post(self):
         try:
-            data=json.loads(self.request.body)
+            data=json.loads(self.request.body.decode('utf-8'))
             print("call LoginHandler success!!!")
             if('name' not in data):
                 name='noname'
