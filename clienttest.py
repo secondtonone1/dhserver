@@ -49,7 +49,11 @@ def downfilerequest(urls='',datas={},filename=''):
         f.write(r.content)
     return r
     
-
+@requestwrapper
+def getrequestReg(urls=''):
+    ret=requests.get(urls,timeout=5)
+    print(ret.content.decode('utf-8'))
+    return ret
     
 if __name__ == "__main__":
     try:
@@ -58,5 +62,6 @@ if __name__ == "__main__":
         postjsonrequest('http://127.0.0.1:8898/login_json',payload)
         postfilerequest('http://127.0.0.1:8898/upload_file',payload,'test.jpg')
         downfilerequest('http://127.0.0.1:8898/download',payload,'test.jpg')
+        getrequestReg('http://127.0.0.1:8898/test/param1/param2/regex')
     except requests.exceptions.ReadTimeout:
         print('request time out...')
